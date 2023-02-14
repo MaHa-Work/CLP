@@ -5,18 +5,16 @@ import net.revature.casestudymjh.Models.DTO.LoginDTO;
 import net.revature.casestudymjh.Models.DTO.RegDTO;
 import net.revature.casestudymjh.Models.User;
 import net.revature.casestudymjh.Services.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class AuthController {
     private final UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public boolean registration(@RequestBody RegDTO regDTO){
         return userService.register(regDTO);
     }
