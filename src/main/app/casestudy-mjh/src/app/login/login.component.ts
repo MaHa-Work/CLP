@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.loginForm);
+    //console.log(this.loginForm);
     this.authService.login(this.loginForm).subscribe(
       data =>{if (data.name) {
         this.authService.setUser(data);

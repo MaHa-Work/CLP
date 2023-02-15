@@ -16,7 +16,6 @@ import java.util.List;
 @CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class ProductController {
     private final ProductService productService;
-
     @GetMapping
     List<Product> getAllProducts(){
         return productService.findAllProducts();
