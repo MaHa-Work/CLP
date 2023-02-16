@@ -13,6 +13,6 @@ export class CardholderComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(data => this.products=data);
-    console.log(this.products)
+    //console.log(this.products)
   } 
 }

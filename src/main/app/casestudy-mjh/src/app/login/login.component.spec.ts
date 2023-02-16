@@ -7,8 +7,9 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { compileClassMetadata } from '@angular/compiler';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authServiceSpy:jasmine.SpyObj<AuthService>;
@@ -16,7 +17,7 @@ fdescribe('LoginComponent', () => {
   const blankUser:User = new User(0,'','','');
 
   beforeEach(async () => {
-    authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', ['login']);
+    authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', ['login', 'setUser']);
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(
         [{path: 'home', component: BlankComponent}]
@@ -45,7 +46,25 @@ fdescribe('LoginComponent', () => {
     component.showReg();
 
     expect(cur).toBe(component.register);
-  })
+  });
+
+  it('should handle a successful login', ()=>{
+    authServiceSpy.login.and.returnValue(of(user));
+    authServiceSpy.setUser
+
+    component.onSubmit();
+
+    expect(component.success).toBe(undefined);
+  });
+
+  it('should handle a failed login', ()=>{
+    authServiceSpy.login.and.returnValue(of(blankUser));
+    authServiceSpy.setUser
+
+    component.onSubmit();
+
+    expect(component.success).toBe(false);
+  });
   @Component({
     selector: `blank-component`,
     template: `<div></div>`

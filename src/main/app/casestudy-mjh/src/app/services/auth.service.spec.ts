@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { of } from 'rxjs';
+import { Component } from '@angular/core';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -17,6 +18,7 @@ describe('AuthService', () => {
       providers:[{provide:HttpClient, useValue:httpClientSpy}]
     });
     service = TestBed.inject(AuthService);
+    localStorage.clear();
   });
 
   it('should be created', () => {
@@ -31,5 +33,36 @@ describe('AuthService', () => {
 
     expect(returnedUser.id).toBeGreaterThan(0);
     expect(returnedUser.name).toBeTruthy();
+  });
+
+
+  it ('should return the result of registration', ()=>{
+    httpClientSpy.post.and.returnValue(of(true));
+    let result = false;
+
+    service.register({email:'email', password: 'password', name:'name'}).subscribe(ret=>result=ret);
+
+    expect(result).toBe(true);
+  })
+
+
+  it('should save the user given a user', ()=>{
+    expect(localStorage.getItem('user')).toBeFalsy();
+    service.setUser(user);
+    expect(localStorage.getItem('user')).toBeTruthy();
+  });
+
+  it('should return a set user', ()=>{
+    localStorage.setItem('user', JSON.stringify(user));
+
+    let result = service.getUser();
+
+    expect(result).toBeTruthy();
+  });
+
+  it('should return null if user is not set', ()=>{
+    let result = service.getUser();
+
+    expect(result).toBe(null);
   });
 });

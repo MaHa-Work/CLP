@@ -1,10 +1,13 @@
 package net.revature.casestudymjh.Controllers;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.revature.casestudymjh.Models.DTO.LoginDTO;
 import net.revature.casestudymjh.Models.DTO.RegDTO;
 import net.revature.casestudymjh.Models.User;
 import net.revature.casestudymjh.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class AuthController {
+
     private final UserService userService;
 
     @PostMapping("/register")
